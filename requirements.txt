@@ -1,0 +1,21 @@
+# ===========================================
+# PDF to Anki Cards Pro - Dependencies
+# ===========================================
+
+# Streamlit: Our web UI framework (creates the app you see in the browser)
+streamlit>=1.30.0
+
+# google-genai: The NEW unified Google GenAI SDK (replaces google-generativeai)
+# This is the modern SDK that supports the Gemini File API for uploading
+# PDFs directly to Gemini, letting the AI "see" text, images, and diagrams.
+google-genai>=1.0.0
+
+# requests: Makes HTTP calls (we'll use this to talk to AnkiConnect)
+requests>=2.31.0
+
+# ─── REMOVED ───
+# PyPDF2 — REMOVED: Cannot handle scanned PDFs or images/diagrams.
+# google-generativeai — REMOVED: Deprecated, replaced by google-genai.
+
+# genanki: Library to generate .apkg files locally for mobile users
+genanki>=0.13.0
