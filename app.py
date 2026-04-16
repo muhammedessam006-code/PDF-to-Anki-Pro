@@ -736,15 +736,32 @@ try:
         st.divider()
 
         # ── B. Target Settings ──
+        manual_entry = st.checkbox("📝 Manual Deck Entry", value=False,
+            help="Check this to type any deck name freely instead of picking from the dropdown.")
+
         col_d1, col_d2 = st.columns(2)
         live_decks = get_anki_decks()
         raw_options = ["[Create New Root Deck]"] + live_decks
         
         with col_d1:
-            parent_deck = st.selectbox("🎯 Target Anki Deck (Parent)", options=raw_options)
+            if manual_entry:
+                parent_deck_manual = st.text_input(
+                    "🎯 Target Anki Deck (Parent)",
+                    placeholder="e.g., Biochemistry",
+                    help="Type any deck name. Anki will create it if it doesn't exist."
+                )
+            else:
+                parent_deck_select = st.selectbox("🎯 Target Anki Deck (Parent)", options=raw_options)
         with col_d2:
             sub_deck = st.text_input("📁 Sub-deck Name (Optional)", placeholder="e.g., Bio Lecture 1")
-            
+
+        # Resolve the active parent deck value
+        if manual_entry:
+            parent_deck = parent_deck_manual.strip() if parent_deck_manual.strip() else "New Medical Deck"
+        else:
+            parent_deck = parent_deck_select
+
+        # Build the final target path
         if parent_deck == "[Create New Root Deck]":
             target_deck = sub_deck.strip() if sub_deck.strip() else "New Medical Deck"
         else:
